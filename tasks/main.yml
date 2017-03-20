@@ -6,6 +6,8 @@
   changed_when: false # This will never report 'changed' status. But it will report 'ok', 'unreachable' or 'failed'
 
 - name: Clone dot files
+  become: yes
+  become_user: "{{ item.name }}"
   git:
     repo: "{{ dotfile_repo }}"
     dest: "{{ item.dest }}/dotfiles"
@@ -15,6 +17,8 @@
   with_items: "{{ dotfile_users }}"
 
 - name: Check owner, group of the dotfiles directory
+  become: yes
+  become_user: "{{ item.name }}"
   file:
     path: "{{ item.dest }}/dotfiles"
     state: directory
@@ -38,6 +42,8 @@
   changed_when: false # This will never report 'changed' status. But it will report 'ok', 'unreachable' or 'failed'
 
 - name: Create links for dot files on home directory
+  become: yes
+  become_user: "{{ item[1].name }}"
   file:
     src: "{{ item[1].dest }}/dotfiles/{{ item[0] | basename }}"
     dest: "{{ item[1].dest }}/{{ item[0] | basename }}"
@@ -51,6 +57,8 @@
     - "{{ dotfile_users }}"
 
 - name: Replace git name
+  become: yes
+  become_user: "{{ item.name }}"
   replace:
     dest: "{{ item.dest }}/dotfiles/.gitconfig"
     regexp: "name = *.*"
@@ -59,6 +67,8 @@
   with_items: "{{ dotfile_users }}"
 
 - name: Replace git email
+  become: yes
+  become_user: "{{ item.name }}"
   replace:
     dest: "{{ item.dest }}/dotfiles/.gitconfig"
     regexp: "email = *.*"
