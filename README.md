@@ -42,4 +42,4 @@ MIT
 
 # Author Information
 
-Apostolos Tovletoglou [ansible-role-user](https://github.com/tovletoglou/ansible-role-dotfiles)
+Apostolos Tovletoglou [ansible-role-dotfiles](https://github.com/tovletoglou/ansible-role-dotfiles)
