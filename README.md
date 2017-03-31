@@ -10,23 +10,27 @@ Tested CentOS 7
 
 Define dot-file repository
 
-    dotfile_repo: http://github.com/tovletoglou/dotfiles.git
+```yml
+dotfile_repo: http://github.com/tovletoglou/dotfiles.git
+```
 
 Define users
 
-    dotfile_users:
-      - {
-          name: root,
-          dest: /root,
-          gitname: GIT_ROOT_NAME,
-          gitmail: ROOT@EMAIL
-        }
-      - {
-          name: example_user,
-          dest: /home/example_user,
-          gitname: Example User,
-          gitmail: example_user@example.com
-        }
+```yml
+dotfile_users:
+  - {
+      name: root,
+      dest: /root,
+      gitname: GIT_ROOT_NAME,
+      gitmail: ROOT@EMAIL
+    }
+  - {
+      name: example_user,
+      dest: /home/example_user,
+      gitname: Example User,
+      gitmail: example_user@example.com
+    }
+```
 
 ## Dependencies
 
