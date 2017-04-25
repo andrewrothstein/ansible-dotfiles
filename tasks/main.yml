@@ -13,7 +13,7 @@
     dest: "{{ item.dest }}/dotfiles"
     update: "{{ dotfile_update }}"
     force: yes
-  when: "'{{ item.name }}' in system_users.stdout_lines"
+  when: item.name in system_users.stdout_lines
   with_items: "{{ dotfile_users }}"
 
 - name: Check owner, group of the dotfiles directory
@@ -25,7 +25,7 @@
     recurse: yes
     owner: "{{ item.name }}"
     group: "{{ item.name }}"
-  when: "'{{ item.name }}' in system_users.stdout_lines"
+  when: item.name in system_users.stdout_lines
   with_items: "{{ dotfile_users }}"
 
 # All ~/dotfiles directories contain the same information (cloned from the same
@@ -33,7 +33,7 @@
 # the last entry of `dotfile_users`, in order to create the file list.
 - name: Set fact with dot files from directory
   set_fact: template_dir="{{ item.dest }}/dotfiles/"
-  when: "'{{ item.name }}' in system_users.stdout_lines"
+  when: item.name in system_users.stdout_lines
   with_items: "{{ dotfile_users }}"
 
 - name: Create the array with dot files
@@ -52,7 +52,7 @@
     group: "{{ item[1].name }}"
     state: link
     force: yes
-  when: "'{{ item[1].name }}' in system_users.stdout_lines"
+  when: item[1].name in system_users.stdout_lines
   with_nested:
     - "{{ dot_file_list.stdout_lines }}"
     - "{{ dotfile_users }}"
@@ -64,7 +64,7 @@
     dest: "{{ item.dest }}/dotfiles/.gitconfig"
     regexp: "name = *.*"
     replace: "name = {{ item.gitname }}"
-  when: "'{{ item.name }}' in system_users.stdout_lines"
+  when: item.name in system_users.stdout_lines
   with_items: "{{ dotfile_users }}"
 
 - name: Replace git email
@@ -74,5 +74,5 @@
     dest: "{{ item.dest }}/dotfiles/.gitconfig"
     regexp: "email = *.*"
     replace: "email = {{ item.gitmail }}"
-  when: "'{{ item.name }}' in system_users.stdout_lines"
+  when: item.name in system_users.stdout_lines
   with_items: "{{ dotfile_users }}"
